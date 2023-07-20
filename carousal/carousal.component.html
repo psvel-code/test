@@ -1,0 +1,25 @@
+<div class="carousel-container">
+  <div class="carousel" [ngStyle]="{'transform': 'translateX(' + (-currentIndex * 100) + '%)'}">
+    <div class="carousel-item" *ngFor="let item of carouselItems">
+      <div class="image-container">
+        <img [src]="item.imageUrl" alt="Carousel Image">
+      </div>
+      <div class="text-container">
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.description }}</p>
+      </div>
+      <div class="button-container">
+        <button (click)="onButtonClick(item)">{{ item.buttonLabel }}</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="arrow-container">
+    <div class="arrow left" (click)="prevItem()">&#10094;</div>
+    <div class="arrow right" (click)="nextItem()">&#10095;</div>
+  </div>
+
+  <div class="dots">
+    <span class="dot" *ngFor="let item of carouselItems; let i = index" [class.active]="i === currentIndex" (click)="goToItem(i)"></span>
+  </div>
+</div>
