@@ -1,0 +1,91 @@
+<div>
+  <div *ngFor="let data of displayDetails?.data;let i =index" class="split">
+    <div fxLayout.lt-md="column" fxFlex="100" [@hoverAnimation]="data.isReversed ?'hovered' : 'initial'" class="child"
+      (mouseover)="onMouseOver(i)" (mouseout)="onMouseOut(i)">
+      <div fxFlex="49" [fxFlexOrder.gt-md]="i%2 !== 0 ? 2:1" fxFlex.lt-md="100" fxFlex.gt-md="49"
+        fxFlexAlign="center center" class="textArea">
+        <h1>
+          <!-- [ngStyle]="{'color':data?.headingTextColor, 'font-family':data?.headingfontFamily, 'font-size':data?.headingfontSize +'px'}"> -->
+          {{data?.headingText}}
+        </h1>
+        <p>
+          <!-- [ngStyle]="{'color':data?.subTextColor, 'font-family':data?.subfontFamily, 'font-size':data?.subfontSize +'px'}"> -->
+          {{data?.subHeading}}
+        </p>
+      </div>
+      <img fxFlex="51" [fxFlexOrder.gt-md]="i%2 === 0 ? 2:1" fxFlex.lt-md="100" fxFlex.gt-md="51" [src]="data?.descriptionImage?.includes('base64') && data?.descriptionImage
+      ?.includes(',') ? data?.descriptionImage : data?.descriptionImage" alt="image">
+    </div>
+  </div>
+</div>
+
+
+
+
+.child{
+  height: 500px;
+  display: flex;
+  flex-direction: row;
+  transition: flex 0.5s ease;
+  transition: all 0.8s ease;
+}
+.split{
+  transition: all 2s ease;
+
+}
+
+
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-split',
+  templateUrl: './split.component.html',
+  styleUrls: ['./split.component.scss'],
+  animations: [
+    trigger('hoverAnimation', [
+      state('initial', style({
+        transform: 'scale(1)',
+        boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)',
+        backgroundColor: '#f0f0f0'
+      })),
+      state('hovered', style({
+        transform: 'scale(1.1)',
+        boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.4)',
+        backgroundColor: '#ccc'
+      })),
+      transition('initial <=> hovered', animate('0.5s ease')),
+    ])
+  ]
+})
+export class SplitComponent {
+
+  displayDetails: any =
+    {
+      data: [
+        {
+          descriptionImage: "https://images.unsplash.com/photo-1690229689642-c85a2373e2ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
+          "subHeading": "hello",
+          "headingText": "hi",
+          "isReversed": false
+
+        },
+        {
+          descriptionImage: "https://images.unsplash.com/photo-1690229689642-c85a2373e2ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
+          "subHeading": "hello",
+          "headingText": "hi",
+          "isReversed": false
+        }
+      ]
+    }
+
+  onMouseOver(i: number) {
+    this.displayDetails.data[i].isReversed = true;
+  }
+
+  onMouseOut(i: number) {
+    this.displayDetails.data[i].isReversed = false;
+  }
+
+}
+//
